@@ -1,0 +1,157 @@
+.profile {
+    max-width: 100%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.profile__greetings {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    color: #000000;
+    margin: 74px auto 123px;
+    padding: 0;
+}
+
+.profile__form {
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    width: 410px;
+}
+
+.profile__input-container {
+    width: 100%;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #E8E8E8;
+    margin: 0 0 17px;
+    height: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile__input-placeholder {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: #000000;
+    text-align: left;
+    max-width: 141px;
+    min-width: 50px;
+}
+
+.profile__input {
+    outline: none;
+    width: 100%;
+    border: none;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 13px;
+    text-align: right;
+    color: #000000;
+}
+
+.profile__input:last-of-type {
+    border: none;
+    margin: 0;
+}
+
+.profile__btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    margin: 220px auto 70px;
+}
+
+.profile__edit-btn {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #000000;
+    margin: 0 0 16px;
+    padding: 0;
+    transition: opacity 0.5s ease;
+    border: none;
+    background-color: transparent;
+}
+
+.profile__edit-btn:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.profile__exit-btn {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    text-align: center;
+    color: #FF3055;
+    margin: 0;
+    padding: 0;
+    transition: opacity 0.5s ease;
+    border: none;
+    background-color: transparent;
+}
+
+.profile__exit-btn:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .profile__greetings {
+        margin: 236px auto 96px;
+    }
+
+    .profile__btn-container {
+        margin: 210px auto 296px;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .profile__greetings {
+        margin: 70px auto 80px;
+    }
+
+    .profile__form {
+        width: 260px;
+    }
+
+    .profile__input-placeholder {
+        max-width: 130px;
+    }
+
+    .profile__btn-container {
+        margin: 379px auto 40px;
+    }
+
+    .profile__edit-btn {
+        font-size: 12px;
+        line-height: 15px;
+    }
+
+    .profile__exit-btn {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}
