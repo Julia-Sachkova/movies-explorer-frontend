@@ -6,7 +6,7 @@
 }
 
 .techs__title {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 22px;
@@ -28,7 +28,7 @@
 }
 
 .techs__text {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 50px;
@@ -41,7 +41,7 @@
 }
 
 .techs__paragraph {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -69,7 +69,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;

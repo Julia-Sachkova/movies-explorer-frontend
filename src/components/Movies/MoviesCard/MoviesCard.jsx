@@ -14,7 +14,7 @@ function MoviesCard({ isSavedMovies }) {
                     <h2 className="card__name">Пример карточки</h2>
                     <p className="card__time">1ч 30м</p>
                 </div>
-                <button className={`card__save-btn ${isSavedMovies && 'card__save-btn_delete'}`} />
+                <button type="button" className={`card__save-btn ${isSavedMovies && 'card__save-btn_delete'}`} />
             </div>
             <img className="card__image" src={image} alt="картинка" />
         </div>

@@ -8,7 +8,7 @@ import Footer from "../Footer/Footer";
 
 function Main() {
     return (
-        <>
+        <main>
             <Promo />
             <NavTab />
             <AboutProject />
@@ -16,7 +16,7 @@ function Main() {
             <AboutMe />
             <Portfolio />
             <Footer />
-        </>
+        </main>
     )
 }
 

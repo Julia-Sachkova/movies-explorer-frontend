@@ -2,7 +2,7 @@
     background: #3456F3;
     border-radius: 3px;
     border: none;
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -31,7 +31,7 @@
 }
 
 .submit-btn__login-link {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -43,7 +43,7 @@
 }
 
 .submit-btn__login {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;

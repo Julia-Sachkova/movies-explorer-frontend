@@ -12,7 +12,7 @@
 }
 
 .input__text {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 10px;
@@ -29,7 +29,7 @@
     padding: 15px;
     background: #F9F9F9;
     border-radius: 8px;
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 13px;
@@ -43,7 +43,7 @@
 }
 
 .input__error_active {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 10px;

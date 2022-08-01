@@ -5,7 +5,7 @@
 }
 
 .portfolio__title {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
@@ -15,6 +15,13 @@
     padding: 0;
     margin: 0 0 50px 70px;
     text-align: left;
+}
+
+
+.portfolio__list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 .portfolio__link-container {
@@ -38,7 +45,7 @@
 }
 
 .portfolio__link {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 30px;
@@ -50,7 +57,7 @@
 }
 
 .portfolio__link-arrow {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 30px;

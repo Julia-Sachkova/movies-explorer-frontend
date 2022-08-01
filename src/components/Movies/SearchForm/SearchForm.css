@@ -27,24 +27,28 @@
 }
 
 .search__input {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
     line-height: 1.11;
-    color: #A0A0A0;
     border: none;
     box-sizing: border-box;
     height: 36px;
     width: 100%;
     color: #000;
-    padding: 0;
+    padding: 0 0 1px;
     margin: 0;
     outline: none;
 }
 
 .search__input::placeholder {
     color: #a0a0a0;
+}
+
+.search__input:focus {
+    padding-bottom: 0;
+    border-bottom: 1px solid #a0a0a0;
 }
 
 .search__icon {
@@ -55,7 +59,7 @@
 }
 
 .search__btn {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 11px;
@@ -64,10 +68,15 @@
     color: #FFFFFF;
     background: #3456F3;
     border-radius: 48px;
-    margin: 19px 19px 19px 0;
+    margin: 19px 19px 19px 21.35px;
     border: none;
     padding: 8px 10.35px;
     cursor: pointer;
+    transition: opacity 0.5s ease;
+}
+
+.search__btn:hover {
+    opacity: 0.7;
 }
 
 .search__vertical-line {
@@ -126,7 +135,7 @@
 }
 
 .checkbox__text {
-    font-family: 'Inter';
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 13px;

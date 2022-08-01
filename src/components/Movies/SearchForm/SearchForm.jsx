@@ -11,6 +11,7 @@ function SearchForm() {
                         className="search__input"
                         placeholder="Фильм"
                         type="text"
+                        required
                     />
                     <button className="search__btn" type="submit">Найти</button>
                     <hr className="search__vertical-line" />
