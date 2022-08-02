@@ -1,0 +1,61 @@
+.input__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.input__container:last-of-type {
+    margin: 0;
+}
+
+.input__text {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #A0A0A0;
+    margin: 0 0 10px;
+    text-align: left;
+}
+
+.input__item {
+    outline: none;
+    width: 366px;
+    height: 16px;
+    padding: 15px;
+    background: #F9F9F9;
+    border-radius: 8px;
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 16px;
+    color: #000000;
+    border: none;
+}
+
+.input__item_error {
+    color: #FF3055;
+}
+
+.input__error_active {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #FF3055;
+    position: absolute;
+    top: 78px;
+    left: 0;
+}
+
+@media screen and (max-width: 520px) {
+    .input__item {
+        width: 230px;
+    }
+}
