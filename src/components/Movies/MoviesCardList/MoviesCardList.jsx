@@ -1,19 +1,17 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList({ isSavedMovies }) {
+function MoviesCardList({ isSavedMovies, moviesList }) {
     return (
         <section>
             <ul className="cards">
-
-                {/* временнные карточки для просмотра результата */}
-
-                <MoviesCard isSavedMovies={isSavedMovies} />
-                <MoviesCard isSavedMovies={isSavedMovies} />
-                <MoviesCard isSavedMovies={isSavedMovies} />
-                <MoviesCard isSavedMovies={isSavedMovies} />
+                {moviesList.map((movies) => (
+                    <MoviesCard
+                        isSavedMovies={isSavedMovies}
+                        key={isSavedMovies ? movies._id : movies.id}
+                    />
+                ))}
             </ul>
-            <button type="button" className="cards__more">Ещё</button>
         </section>
     )
 }

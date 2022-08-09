@@ -1,10 +1,11 @@
 import './MoviesCard.css';
 import image from '../../../images/cat2.jpg';
 
-function MoviesCard({ isSavedMovies }) {
+function MoviesCard({ isSavedMovies, onCardLike, card }) {
 
-
-    // фиксированные данные карточки указаны временно, до введения функциональности
+    function handleSaveClick() {
+        onCardLike(card);
+    };
 
 
     return (
@@ -14,7 +15,7 @@ function MoviesCard({ isSavedMovies }) {
                     <h2 className="card__name">Пример карточки</h2>
                     <p className="card__time">1ч 30м</p>
                 </div>
-                <button type="button" className={`card__save-btn ${isSavedMovies && 'card__save-btn_delete'}`} />
+                <button type="button" className={`card__save-btn ${isSavedMovies && 'card__save-btn_delete'}`} onClick={handleSaveClick} />
             </div>
             <img className="card__image" src={image} alt="картинка" />
         </div>

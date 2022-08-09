@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import { useState } from 'react';
 import './App.css';
 
 import Main from '../Main/Main';
@@ -10,6 +11,8 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 
 function App() {
+  const [loading, setLoading] = useState(false);
+
   return (
     <div className="app">
       <Routes>
