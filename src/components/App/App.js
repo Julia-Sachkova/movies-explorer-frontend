@@ -12,21 +12,42 @@ import Login from '../Login/Login';
 
 function App() {
   const [loading, setLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <div className="app">
       <Routes>
-        <Route path="/" element={<Main />} />
 
-        <Route path="/movies" element={<Movies />} />
+        <Route
+        path="/"
+        element={<Main />}
+        isLoggedIn={isLoggedIn}
+        />
 
-        <Route path="/saved-movies" element={<SavedMovies />} />
+        <Route
+        path="/movies"
+        element={<Movies />}
+        />
 
-        <Route path="/profile" element={<Profile />} />
+        <Route
+        path="/saved-movies"
+        element={<SavedMovies />}
+        />
 
-        <Route path="/signup" element={<Register />} />
+        <Route
+        path="/profile"
+        element={<Profile />}
+        />
 
-        <Route path="/signin" element={<Login />} />
+        <Route
+        path="/signup"
+        element={<Register />}
+        />
+
+        <Route
+        path="/signin"
+        element={<Login />}
+        />
 
       </Routes>
     </div>

@@ -63,6 +63,10 @@
     color: #000000;
 }
 
+.profile__input_error {
+    color: #FF3055;
+}
+
 .profile__input:last-of-type {
     border: none;
     margin: 0;
@@ -91,6 +95,10 @@
     transition: opacity 0.5s ease;
     border: none;
     background-color: transparent;
+}
+
+.profile__edit-btn_inactive {
+    color: #A0A0A0;
 }
 
 .profile__edit-btn:hover {

@@ -1,7 +1,7 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList({ isSavedMovies, moviesList }) {
+function MoviesCardList({ isSavedMovies, moviesList, onDelete, onSave }) {
     return (
         <section>
             <ul className="cards">
@@ -9,6 +9,8 @@ function MoviesCardList({ isSavedMovies, moviesList }) {
                     <MoviesCard
                         isSavedMovies={isSavedMovies}
                         key={isSavedMovies ? movies._id : movies.id}
+                        onDelete={onDelete}
+                        onSave={onSave}
                     />
                 ))}
             </ul>

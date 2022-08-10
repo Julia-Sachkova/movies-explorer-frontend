@@ -42,7 +42,7 @@
     color: #FF3055;
 }
 
-.input__error_active {
+.input__error {
     font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
@@ -52,6 +52,7 @@
     position: absolute;
     top: 78px;
     left: 0;
+    white-space: nowrap;
 }
 
 @media screen and (max-width: 520px) {

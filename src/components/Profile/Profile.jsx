@@ -1,26 +1,64 @@
+import React from 'react';
+
 import './Profile.css';
 import Header from '../Header/Header';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import useFormWithValidation from '../../utils/validation.js';
 
-function Profile() {
+function Profile({ onUpdateUser }) {
+    const currentUser = React.useContext(CurrentUserContext);
+    const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+    const isInactiveBtn = (!isValid || values.name === currentUser.name || values.email === currentUser.email);
+  
+    React.useEffect(() => {
+      if (currentUser) {
+        resetForm(currentUser, {}, true)
+      }
+    }, [currentUser, resetForm]);
+
+    function handleSubmit(evt) {
+        evt.preventDefault();
+    
+        onUpdateUser({
+          name: values.name,
+          email: values.email,
+        });
+    }
+
     return (
         <div className="profile">
             <Header isLoggedIn={true} isMovies={false} isSavedMovies={false} />
-
-            {/* определенные текстовые значения временно, до функциональности */}
-
-            <h2 className="profile__greetings">Привет, Юлия!</h2>
-            <form className="profile__form">
+            <h2 className="profile__greetings">Привет, {currentUser.name}!</h2>
+            <form className="profile__form" onSubmit={handleSubmit}>
                 <div className="profile__input-container">
                     <p className="profile__input-placeholder">Имя</p>
-                    <input className="profile__input" type="text"></input>
+                    <input
+                    className={`profile__input ${errors.name ? 'profile__input_error' : ''}`}
+                    type="text"
+                    defaultValue={currentUser.name}
+                    value={values.name || ''}
+                    onChange={handleChange}
+                    />
                 </div>
                 <div className="profile__input-container">
                     <p className="profile__input-placeholder">E-mail</p>
-                    <input className="profile__input" type="email"></input>
+                    <input
+                    className={`profile__input ${errors.email ? 'profile__input_error' : ''}`}
+                    type="email"
+                    defaultValue={currentUser.email}
+                    value={values.email || ''}
+                    onChange={handleChange}
+                    />
                 </div>
             </form>
             <div className="profile__btn-container">
-                <button type="button" className="profile__edit-btn">Редактировать</button>
+                <button
+                type="submit"
+                className={`profile__edit-btn ${isInactiveBtn ? 'profile__edit-btn_error' : ''}`}
+                disabled={isInactiveBtn ? true : false}
+                >
+                Редактировать
+                </button>
                 <button type="button" className="profile__exit-btn">Выйти из аккаунта</button>
             </div>
 
