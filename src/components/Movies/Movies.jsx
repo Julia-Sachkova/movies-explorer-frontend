@@ -6,7 +6,7 @@ import Preloader from './Preloader/Preloader';
 import MoviesCardList from './MoviesCardList/MoviesCardList';
 import Footer from "../Footer/Footer";
 
-function Movies({ loading, moviesList }) {
+function Movies({ loading, moviesList, onSave }) {
     const width = window.screen.width;
     const [filmsAmount, setFilmsAmount] = React.useState(() => {
         if (width >= 768) {
@@ -51,10 +51,10 @@ function Movies({ loading, moviesList }) {
 
     return (
         <>
-            <Header isLoggedIn={true} isMovies={true} isSavedMovies={false} />
+            <Header isLoggedIn={true} isMovies={true} isSavedMovies={false} isMain={false} />
             <SearchForm />
             {loading && <Preloader />}
-            <MoviesCardList isSavedMovies={false} moviesList={moviesListDisplay} />
+            <MoviesCardList isSavedMovies={false} moviesList={moviesListDisplay} onSave={onSave} />
             {moviesListDisplay.length > moviesList.length ?
                 <button type="button" className="movies__more" onClick={handleAddFilms}>Ещё</button>
                 :

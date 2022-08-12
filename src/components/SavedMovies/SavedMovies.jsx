@@ -4,13 +4,13 @@ import Preloader from '../Movies/Preloader/Preloader';
 import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
 import Footer from "../Footer/Footer";
 
-function SavedMovies({ loading }) {
+function SavedMovies({ loading, onDelete, moviesList }) {
     return (
         <>
-            <Header isLoggedIn={true} isMovies={false} isSavedMovies={true} />
+            <Header isLoggedIn={true} isMovies={false} isSavedMovies={true} isMain={false} onDelete={onDelete} />
             <SearchForm />
             {loading && <Preloader />}
-            <MoviesCardList isSavedMovies={true} />
+            <MoviesCardList isSavedMovies={true} moviesList={moviesList} />
             <Footer />
         </>
     )

@@ -4,7 +4,7 @@ import Header from '../../Header/Header';
 function Promo({ isLoggedIn }) {
     return (
         <section className="promo">
-            <Header isLoggedIn={isLoggedIn} isMovies={false} isSavedMovies={false} />
+            <Header isLoggedIn={isLoggedIn} isMovies={false} isSavedMovies={false} isMain={true} />
             <h1 className="promo__title">Учебный проект студента факультета Веб-разработки.</h1>
         </section>
     )

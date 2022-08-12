@@ -30,7 +30,7 @@ function MoviesCard({ isSavedMovies, movie, onDelete, onSave }) {
                 </div>
                 <button type="button" className={`card__save-btn ${isSavedMovies && 'card__save-btn_delete'}`} onClick={isSavedMovies ? handleDeleteClick : handleSaveClick} />
             </div>
-            <a href={movie.trailerLink} target="_blank" rel="noreferer"><img className="card__image" src={movie.image.url} alt={movie.nameRU} /></a>
+            <a href={movie.trailerLink} target="_blank" rel="noreferrer"><img className="card__image" src={movie.image.url} alt={movie.nameRU} /></a>
         </div>
     )
 }

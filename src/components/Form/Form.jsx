@@ -1,7 +1,7 @@
 import './Form.css';
 import { Link } from 'react-router-dom';
 
-function Form({ greetings, children, onSubmit }) {
+function Form({ greetings, onSubmit, children }) {
     return (
         <div className="auth">
             <div className="auth__container">

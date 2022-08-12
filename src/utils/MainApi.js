@@ -1,4 +1,4 @@
-const BASE_URL = "movies-exp.nomoredomains.xyz";
+const BASE_URL = "https://movies-exp.nomoredomains.xyz";
 
 const checkResOk = (res) => {
     if (res.ok) {
@@ -42,7 +42,7 @@ export const getSavedMovies = () => {
 
 export const saveMovie = (movie) => {
     return fetch(`${BASE_URL}/movies`, {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
             'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ export const deleteMovie = (id) => {
         .then(res => checkResOk(res));
 }
 
-export const register = (email, password) => {
+export const register = ({name, email, password}) => {
     return fetch(`${BASE_URL}/signup`, {
         method: "POST",
         headers: {
@@ -84,6 +84,7 @@ export const register = (email, password) => {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
+            name,
             email,
             password
         })
@@ -92,7 +93,7 @@ export const register = (email, password) => {
 };
 
 
-export const authorization = (email, password) => {
+export const authorization = ({email, password}) => {
     return fetch(`${BASE_URL}/signin`, {
         method: "POST",
         headers: {

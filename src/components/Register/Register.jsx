@@ -20,7 +20,7 @@ function Register({ onRegister }) {
     return (
         <Form greetings="Добро пожаловать!" onSubmit={handleSubmit}>
             <Input
-            name='name'
+            name="name"
             text="Имя"
             type="text"
             minLength="2"
@@ -30,7 +30,7 @@ function Register({ onRegister }) {
             error={errors.name}
             />
             <Input
-            name='email'
+            name="email"
             text="E-mail"
             type="email"
             onChange={handleChange}
@@ -39,7 +39,7 @@ function Register({ onRegister }) {
             placholder='aaa'
             />
             <Input
-            name='password'
+            name="password"
             text="Пароль"
             type="password"
             minLength="4"

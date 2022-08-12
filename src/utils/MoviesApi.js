@@ -2,6 +2,7 @@ const BASE_URL = "https://api.nomoreparties.co/beatfilm-movies";
 
 export default function getMovies() {
     return fetch(`${BASE_URL}`, {
+        method: 'GET',
         headers: {
             'Content-Type': 'application/json',
         }

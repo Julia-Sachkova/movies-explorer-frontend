@@ -5,7 +5,7 @@ import Header from '../Header/Header';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import useFormWithValidation from '../../utils/validation.js';
 
-function Profile({ onUpdateUser }) {
+function Profile({ onUpdateUser, onExit }) {
     const currentUser = React.useContext(CurrentUserContext);
     const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
     const isInactiveBtn = (!isValid || values.name === currentUser.name || values.email === currentUser.email);
@@ -33,19 +33,21 @@ function Profile({ onUpdateUser }) {
                 <div className="profile__input-container">
                     <p className="profile__input-placeholder">Имя</p>
                     <input
+                    name="name"
                     className={`profile__input ${errors.name ? 'profile__input_error' : ''}`}
                     type="text"
-                    defaultValue={currentUser.name}
                     value={values.name || ''}
                     onChange={handleChange}
+                    minLength="2"
+                    maxLength="30"
                     />
                 </div>
                 <div className="profile__input-container">
                     <p className="profile__input-placeholder">E-mail</p>
                     <input
+                    name="email"
                     className={`profile__input ${errors.email ? 'profile__input_error' : ''}`}
                     type="email"
-                    defaultValue={currentUser.email}
                     value={values.email || ''}
                     onChange={handleChange}
                     />
@@ -59,7 +61,7 @@ function Profile({ onUpdateUser }) {
                 >
                 Редактировать
                 </button>
-                <button type="button" className="profile__exit-btn">Выйти из аккаунта</button>
+                <button type="button" className="profile__exit-btn" onClick={onExit}>Выйти из аккаунта</button>
             </div>
 
         </div>

@@ -18,11 +18,11 @@ function Navigation({ isLoggedIn, isMain, isMovies, isSavedMovies }) {
         <nav className="navigation">
             {isLoggedIn ?
                 <>
-                    <div className="navigation__links-films">
+                    <div className={`navigation__links-films ${isMain ? 'navigation__links-films_main' : ''}`}>
                         <Link to="/movies" className={isMovies ? "navigation__link_active navigation__link" : "navigation__link"}>Фильмы</Link>
                         <Link to="/saved-movies" className={isSavedMovies ? "navigation__link_active navigation__link" : "navigation__link"}>Сохраненные фильмы</Link>
                     </div>
-                    <Link to="/profile" className="navigation__link-account">Аккаунт <img className="navigation_profile-icon" src={profile} alt="иконка аккаунта." /></Link>
+                    <Link to="/profile" className={`navigation__link-account ${isMain ? 'navigation__link-account_main' : ''}`}>Аккаунт <img className="navigation_profile-icon" src={profile} alt="иконка аккаунта." /></Link>
                     <button type="button" className="navigation__burger" onClick={showMenu} />
                     <div className={`burger-menu ${isOpenMenu && 'burger-menu_opened'}`}>
                         <div className="burger-menu__container">
