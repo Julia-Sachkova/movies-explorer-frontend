@@ -11,7 +11,7 @@ export const getUserInfo = () => {
     return fetch(`${BASE_URL}/users/me`, {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
             "Content-Type": "application/json",
         },
     }).then((res) => checkResOk(res));
@@ -21,7 +21,7 @@ export const editUserInfo = (name, email) => {
     return fetch(`${BASE_URL}/users/me`, {
         method: "PATCH",
         headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -35,7 +35,7 @@ export const getSavedMovies = () => {
     return fetch(`${BASE_URL}/movies`, {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
             "Content-Type": "application/json",
         },
     }).then((res) => checkResOk(res));
@@ -45,7 +45,7 @@ export const saveMovie = (movie) => {
     return fetch(`${BASE_URL}/movies`, {
         method: "POST",
         headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -69,7 +69,7 @@ export const deleteMovie = (id) => {
     return fetch(`${BASE_URL}/movies/${id}`, {
         method: "DELETE",
         headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
             "Content-Type": "application/json",
         },
     }).then((res) => checkResOk(res));
@@ -110,7 +110,7 @@ export const checkToken = (token) => {
         headers: {
             Accept: "application/json",
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            'Authorization': `Bearer ${token}`,
         },
     }).then(checkResOk);
 };

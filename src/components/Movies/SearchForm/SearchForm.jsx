@@ -62,7 +62,7 @@ function SearchForm({
                     <input
                         type="checkbox"
                         className="checkbox__hide"
-                        checked={isCheckboxChecked}
+                        checked={isCheckboxChecked || false}
                         onChange={onCheck}
                     />
                     <span className="checkbox__slider" />

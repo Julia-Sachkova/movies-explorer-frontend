@@ -21,6 +21,7 @@ function App() {
     const [loading, setLoading] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
     const [shortMovies, setShortMovies] = useState(JSON.parse(localStorage.getItem("checkbox")));
+    const [shortSavedMovies, setShortSavedMovies] = useState(JSON.parse(localStorage.getItem("saved-checkbox")));
     const [isSaved, setIsSaved] = useState(false);
     const [currentUser, setCurrentUser] = useState({});
     const [movies, setMovies] = useState([]);
@@ -31,11 +32,12 @@ function App() {
     function handleTokenCheck() {
         const jwt = localStorage.getItem("jwt");
         if (jwt) {
-            mainApi
-                .checkToken(jwt)
+            mainApi.checkToken(jwt)
                 .then((res) => {
-                    if (res) handleLogin();
-                    history(location.pathname);
+                    if (res) {
+                        handleLogin();
+                        history(location.pathname);
+                    }
                 })
                 .catch((err) => {
                     console.log(err);
@@ -49,8 +51,7 @@ function App() {
 
     useEffect(() => {
         if (loggedIn) {
-            mainApi
-                .getUserInfo()
+            mainApi.getUserInfo()
                 .then((user) => setCurrentUser(user))
                 .catch((err) => {
                     console.log(err);
@@ -59,11 +60,16 @@ function App() {
     }, [loggedIn]);
 
     useEffect(() => {
-        Promise.all([moviesApi.getMovies(), mainApi.getSavedMovies()])
+        if (loggedIn) {
+            Promise.all([moviesApi.getMovies(), mainApi.getSavedMovies()])
             .then(([movies, savedMovies]) => {
+                    setLoading(true);
+
                     localStorage.setItem("movies", JSON.stringify(movies));
                     setMovies(JSON.parse(localStorage.getItem("movies")));
-                    setFilteredMovies(JSON.parse(localStorage.getItem("filter-movies")))
+                    if (localStorage.getItem("filter-movies")) {
+                        setFilteredMovies(JSON.parse(localStorage.getItem("filter-movies")));
+                    }
 
                     localStorage.setItem("saved-movies", JSON.stringify(savedMovies));
                     const filterMoviesList = movies.reverse().filter((movie) => {
@@ -73,21 +79,23 @@ function App() {
                     });
                     setSavedMovies(JSON.parse(localStorage.getItem("saved-movies")));
                     setFilteredSavedMovies(filterMoviesList);
-                    console.log(filterMoviesList);
                 }
             )
             .catch((err) => {
                 console.log(err);
-              });
-    }, []);
+              })
+              .finally(() => {
+                setLoading(false);
+              })
+        }
+    }, [loggedIn]);
 
     function handleLogin() {
         setLoggedIn(true);
     }
 
     function handleLoginSubmit({ email, password }) {
-        mainApi
-            .authorization({ email, password })
+        mainApi.authorization({ email, password })
             .then((res) => {
                 if (res) {
                     localStorage.setItem("jwt", res.token);
@@ -101,8 +109,7 @@ function App() {
     }
 
     const handleRegistrSubmit = ({ name, email, password }) => {
-        mainApi
-            .register({ name, email, password })
+        mainApi.register({ name, email, password })
             .then((res) => {
                 if (res._id) {
                     handleLoginSubmit({ email, password });
@@ -117,8 +124,7 @@ function App() {
     };
 
     function handleUpdateUser({ name, email }) {
-        mainApi
-            .editUserInfo(name, email)
+        mainApi.editUserInfo(name, email)
             .then((userData) => {
                 setCurrentUser(userData);
             })
@@ -153,7 +159,7 @@ function App() {
             });
         });
 
-        if (shortMovies) {
+        if (shortSavedMovies) {
             const filterMoviesList = filteredArr.filter((movie) => {
                 return (
                     movie.duration <= DURATION_MAX_TIME &&
@@ -176,11 +182,15 @@ function App() {
         localStorage.setItem("checkbox", JSON.parse(!shortMovies));
     }
 
+    function handleCheckSaved() {
+        setShortSavedMovies(!shortSavedMovies);
+        localStorage.setItem("saved-checkbox", JSON.parse(!shortSavedMovies));
+    }
+
     function handleMovieSave(movie) {
         const save = savedMovies.some((m) => m.movieId === movie.id);
         if (!save) {
-            mainApi
-                .saveMovie(movie)
+            mainApi.saveMovie(movie)
                 .then((newMovie) => {
                     setSavedMovies([newMovie, ...savedMovies]);
 
@@ -200,8 +210,7 @@ function App() {
             (m) => m.movieId === movie.id
         );
 
-        mainApi
-            .deleteMovie(deletedMovie._id)
+        mainApi.deleteMovie(deletedMovie._id)
             .then(() => {
                 const newMovies = savedMovies.filter(
                     (c) => c.movieId !== movie.id
@@ -226,6 +235,10 @@ function App() {
         localStorage.removeItem("movies");
         localStorage.removeItem("saved-movies");
         localStorage.removeItem("filter-movies");
+        localStorage.removeItem("checkbox");
+        localStorage.removeItem("saved-checkbox");
+        localStorage.removeItem("value");
+        setFilteredMovies([]);
         setLoggedIn(false);
         history("/");
     }
@@ -275,8 +288,8 @@ function App() {
                                     searchSavedMovie={handleSearchSaveMovies}
                                     onDeleteMovie={handleDeleteMovie}
                                     savedMovies={savedMovies}
-                                    onCheck={handleCheck}
-                                    isCheckboxChecked={shortMovies}
+                                    onCheck={handleCheckSaved}
+                                    isCheckboxChecked={shortSavedMovies}
                                     isSaved={isSaved}
                                 />
                             </ProtectedRoute>
