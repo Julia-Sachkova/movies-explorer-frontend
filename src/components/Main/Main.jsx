@@ -17,7 +17,7 @@ function Main({ isLoggedIn }) {
             <Portfolio />
             <Footer />
         </main>
-    )
+    );
 }
 
 export default Main;

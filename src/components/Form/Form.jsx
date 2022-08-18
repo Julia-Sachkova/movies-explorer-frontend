@@ -1,5 +1,5 @@
-import './Form.css';
-import { Link } from 'react-router-dom';
+import "./Form.css";
+import { Link } from "react-router-dom";
 
 function Form({ greetings, onSubmit, children }) {
     return (
@@ -12,7 +12,7 @@ function Form({ greetings, onSubmit, children }) {
                 </form>
             </div>
         </div>
-    )
+    );
 }
 
 export default Form;

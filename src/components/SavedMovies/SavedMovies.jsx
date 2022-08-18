@@ -1,19 +1,44 @@
-import Header from '../Header/Header';
-import SearchForm from '../Movies/SearchForm/SearchForm';
-import Preloader from '../Movies/Preloader/Preloader';
-import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
+import Header from "../Header/Header";
+import SearchForm from "../Movies/SearchForm/SearchForm";
+import Preloader from "../Movies/Preloader/Preloader";
+import MoviesCardList from "../Movies/MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 
-function SavedMovies({ loading, onDelete, moviesList }) {
+function SavedMovies({
+    loading,
+    searchSavedMovie,
+    onDeleteMovie,
+    savedMovies,
+    onCheck,
+    isCheckboxChecked,
+    moviesList,
+    isSaved,
+}) {
     return (
         <>
-            <Header isLoggedIn={true} isMovies={false} isSavedMovies={true} isMain={false} onDelete={onDelete} />
-            <SearchForm />
+            <Header
+                isLoggedIn={true}
+                isMovies={false}
+                isSavedMovies={true}
+                isMain={false}
+            />
+            <SearchForm
+                isSaved={true}
+                searchSavedMovie={searchSavedMovie}
+                onCheck={onCheck}
+                isCheckboxChecked={isCheckboxChecked}
+            />
             {loading && <Preloader />}
-            <MoviesCardList isSavedMovies={true} moviesList={moviesList} />
+            <MoviesCardList
+                isSavedMovies={true}
+                onDelete={onDeleteMovie}
+                savedMovies={savedMovies}
+                moviesList={moviesList}
+                isSaved={isSaved}
+            />
             <Footer />
         </>
-    )
+    );
 }
 
 export default SavedMovies;

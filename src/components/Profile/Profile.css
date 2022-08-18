@@ -97,7 +97,7 @@
     background-color: transparent;
 }
 
-.profile__edit-btn_inactive {
+.profile__edit-btn_error {
     color: #A0A0A0;
 }
 
