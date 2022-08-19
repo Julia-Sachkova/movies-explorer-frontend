@@ -9,6 +9,7 @@ import Profile from "../Profile/Profile";
 import NotFound from "../NotFound/NotFound";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
+import InfoPopup from "../InfoPopup/InfoPopup";
 import * as mainApi from "../../utils/MainApi";
 import * as moviesApi from "../../utils/MoviesApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -18,11 +19,14 @@ import { DURATION_MAX_TIME } from "../../utils/constants";
 function App() {
     const history = useNavigate();
     const location = useLocation();
-    const [loading, setLoading] = useState(false);
-    const [loggedIn, setLoggedIn] = useState(false);
     const [shortMovies, setShortMovies] = useState(JSON.parse(localStorage.getItem("checkbox")));
     const [shortSavedMovies, setShortSavedMovies] = useState(JSON.parse(localStorage.getItem("saved-checkbox")));
+    const [loading, setLoading] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
+    const [popupOpen, setPopupOpen] = useState(false);
+    const [popupErr, setPopupErr] = useState(false);
+    const [popupText, setPopupText] = useState('');
     const [currentUser, setCurrentUser] = useState({});
     const [movies, setMovies] = useState([]);
     const [savedMovies, setSavedMovies] = useState([]);
@@ -40,7 +44,9 @@ function App() {
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
+                    setPopupOpen(true);
+                    setPopupErr(true);
+                    setPopupText(`Произошла ошибка при проверке токена: ${err}`);
                 });
         }
     }
@@ -54,7 +60,9 @@ function App() {
             mainApi.getUserInfo()
                 .then((user) => setCurrentUser(user))
                 .catch((err) => {
-                    console.log(err);
+                    setPopupOpen(true);
+                    setPopupErr(true);
+                    setPopupText(`Произошла ошибка при получении данных о пользователе: ${err}`);
                 });
         }
     }, [loggedIn]);
@@ -82,7 +90,9 @@ function App() {
                 }
             )
             .catch((err) => {
-                console.log(err);
+                setPopupOpen(true);
+                setPopupErr(true);
+                setPopupText(`Произошла ошибка при загрузке фильмов: ${err}`);
               })
               .finally(() => {
                 setLoading(false);
@@ -104,7 +114,9 @@ function App() {
                 }
             })
             .catch((err) => {
-                console.log(err);
+                setPopupOpen(true);
+                setPopupErr(true);
+                setPopupText(`Произошла ошибка при входе: ${err}`);
             });
     }
 
@@ -113,10 +125,15 @@ function App() {
             .then((res) => {
                 if (res._id) {
                     handleLoginSubmit({ email, password });
+                    setPopupOpen(true);
+                    setPopupErr(false);
+                    setPopupText('Вы успешно зарегистрировались!');
                 }
             })
             .catch((err) => {
-                console.log(err);
+                setPopupOpen(true);
+                setPopupErr(true);
+                setPopupText(`Произошла ошибка при регистрации: ${err}`);
             })
             .catch(() => {
                 setLoggedIn(false);
@@ -127,53 +144,70 @@ function App() {
         mainApi.editUserInfo(name, email)
             .then((userData) => {
                 setCurrentUser(userData);
+                setPopupOpen(true);
+                setPopupErr(false);
+                setPopupText('Вы успешно изменили данные!');
             })
             .catch((err) => {
-                console.log(err);
+                setPopupOpen(true);
+                setPopupErr(true);
+                setPopupText(`Не удалось изменить данные, произошла ошибка: ${err}`);
             });
     }
 
     function handleSearch(value) {
-        if (shortMovies) {
-            const filterMoviesList = movies.filter((movie) => {
-                return (
-                    movie.duration <= DURATION_MAX_TIME &&
-                    movie.nameRU.toLowerCase().includes(value.toLowerCase())
-                );
-            });
-            localStorage.setItem("filter-movies", JSON.stringify(filterMoviesList));
-            setFilteredMovies(filterMoviesList);
+        if (value.length === 0) {
+            setPopupOpen(true);
+            setPopupErr(true);
+            setPopupText('Нужно ввести ключевое слово');
         } else {
-            const filterMoviesList = movies.filter((movie) => {
-                return movie.nameRU.toLowerCase().includes(value.toLowerCase());
-            });
-            localStorage.setItem("filter-movies", JSON.stringify(filterMoviesList));
-            return setFilteredMovies(filterMoviesList);
+            if (shortMovies) {
+                const filterMoviesList = movies.filter((movie) => {
+                    return (
+                        movie.duration <= DURATION_MAX_TIME &&
+                        movie.nameRU.toLowerCase().includes(value.toLowerCase())
+                    );
+                });
+                localStorage.setItem("filter-movies", JSON.stringify(filterMoviesList));
+                setFilteredMovies(filterMoviesList);
+            } else {
+                const filterMoviesList = movies.filter((movie) => {
+                    return movie.nameRU.toLowerCase().includes(value.toLowerCase());
+                });
+                localStorage.setItem("filter-movies", JSON.stringify(filterMoviesList));
+                return setFilteredMovies(filterMoviesList);
+            }
         }
     }
 
     function handleSearchSaveMovies(value) {
-        const filteredArr = movies.filter((movie) => {
-            return savedMovies.find((m) => {
-                return m.movieId === movie.id;
-            });
-        });
-
-        if (shortSavedMovies) {
-            const filterMoviesList = filteredArr.filter((movie) => {
-                return (
-                    movie.duration <= DURATION_MAX_TIME &&
-                    movie.nameRU.toLowerCase().includes(value.toLowerCase())
-                );
-            });
-            setIsSaved(true);
-            setFilteredSavedMovies(filterMoviesList);
+        if (value.length === 0) {
+            setPopupOpen(true);
+            setPopupErr(true);
+            setPopupText('Нужно ввести ключевое слово');
         } else {
-            const filterMoviesList = filteredArr.filter((movie) => {
-                return movie.nameRU.toLowerCase().includes(value.toLowerCase());
+            const filteredArr = movies.filter((movie) => {
+                return savedMovies.find((m) => {
+                    return m.movieId === movie.id;
+                });
             });
-            setIsSaved(true);
-            setFilteredSavedMovies(filterMoviesList);
+    
+            if (shortSavedMovies) {
+                const filterMoviesList = filteredArr.filter((movie) => {
+                    return (
+                        movie.duration <= DURATION_MAX_TIME &&
+                        movie.nameRU.toLowerCase().includes(value.toLowerCase())
+                    );
+                });
+                setIsSaved(true);
+                setFilteredSavedMovies(filterMoviesList);
+            } else {
+                const filterMoviesList = filteredArr.filter((movie) => {
+                    return movie.nameRU.toLowerCase().includes(value.toLowerCase());
+                });
+                setIsSaved(true);
+                setFilteredSavedMovies(filterMoviesList);
+            }
         }
     }
 
@@ -196,9 +230,15 @@ function App() {
 
                     const filterMovie = {...movies.filter(movie => movie.id === newMovie.movieId)}[0];
                     setFilteredSavedMovies([filterMovie, ...filteredSavedMovies]);
+
+                    setPopupOpen(true);
+                    setPopupErr(false);
+                    setPopupText('Фильм успешно сохранен!');
                 })
                 .catch((err) => {
-                    console.log(err);
+                    setPopupOpen(true);
+                    setPopupErr(true);
+                    setPopupText(`Произошла ошибка при сохранении фильма: ${err}`);
                 });
         } else {
             handleDeleteMovie(movie);
@@ -220,10 +260,20 @@ function App() {
                 );
                 setSavedMovies(newMovies);
                 setFilteredSavedMovies(newFilterMovies);
+
+                setPopupOpen(true);
+                setPopupErr(false);
+                setPopupText('Фильм успешно удален!');
             })
             .catch((err) => {
-                console.log(err);
+                setPopupOpen(true);
+                setPopupErr(true);
+                setPopupText(`Произошла ошибка при удалении фильма: ${err}`);
             });
+    }
+
+    function handlePopupClose() {
+        setPopupOpen(false);
     }
 
     function toBack() {
@@ -240,6 +290,7 @@ function App() {
         localStorage.removeItem("value");
         setFilteredMovies([]);
         setLoggedIn(false);
+        handlePopupClose();
         history("/");
     }
 
@@ -310,6 +361,14 @@ function App() {
 
                     <Route path="*" element={<NotFound onBack={toBack} />} />
                 </Routes>
+
+                <InfoPopup
+                    isOpen={popupOpen}
+                    text={popupText}
+                    onClose={handlePopupClose}
+                    err={popupErr}
+                />
+
             </div>
         </CurrentUserContext.Provider>
     );

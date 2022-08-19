@@ -49,7 +49,6 @@ function SearchForm({
                         className="search__input"
                         placeholder="Фильм"
                         type="text"
-                        required
                         value={isSaved ? inputValueSaved : inputValue}
                         onChange={isSaved ? handleChangeInputSaved : handleChangeInput}
                     />
