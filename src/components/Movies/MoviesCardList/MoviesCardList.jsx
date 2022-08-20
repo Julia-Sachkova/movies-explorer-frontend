@@ -21,13 +21,13 @@ function MoviesCardList({
     savedMovies,
     isSaved,
 }) {
-    const width = window.screen.width;
+    const width = window.innerWidth;
 
     const [filmsAmount, setFilmsAmount] = React.useState(0);
     const [filmsAdd, setFilmsAdd] = React.useState(0);
 
     const moviesDisplay = moviesList.length - filmsAmount;
-    
+
     React.useEffect(() => {
         if (width >= SCREEN_WIDTH_MID) {
             setFilmsAmount(MOVIES_AMOUNT_MAX);

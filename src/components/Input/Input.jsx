@@ -9,6 +9,7 @@ function Input({
     type,
     minLength,
     maxLength,
+    disabled
 }) {
     return (
         <div className="input__container">
@@ -22,6 +23,7 @@ function Input({
                 onChange={onChange}
                 value={value}
                 required
+                disabled={disabled}
             />
             <span className="input__error">{error}</span>
         </div>

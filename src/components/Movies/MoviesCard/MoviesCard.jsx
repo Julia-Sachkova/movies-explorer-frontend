@@ -41,12 +41,11 @@ function MoviesCard({
                 </div>
                 <button
                     type="button"
-                    className={`card__save-btn ${
-                        !isSaved &&
+                    className={`card__save-btn ${!isSaved &&
                         savedMovies.find((m) => m.movieId === movie.id)
-                            ? "card__save-btn_active"
-                            : ""
-                    } ${isSavedMovies && "card__save-btn_delete"}`}
+                        ? "card__save-btn_active"
+                        : ""
+                        } ${isSavedMovies && "card__save-btn_delete"}`}
                     onClick={
                         isSavedMovies ? handleDeleteClick : handleSaveClick
                     }

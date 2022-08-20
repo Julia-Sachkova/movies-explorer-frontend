@@ -1,3 +1,5 @@
+import React from 'react';
+
 import "./Register.css";
 import Input from "../Input/Input";
 import SubmitBtn from "../SubmitBtn/SubmitBtn";
@@ -5,8 +7,8 @@ import Form from "../Form/Form";
 import useFormWithValidation from "../../utils/validation.js";
 
 function Register({ onRegister }) {
-    const { values, handleChange, errors, isValid, resetForm } =
-        useFormWithValidation();
+    const { values, handleChange, errors, isValid } = useFormWithValidation();
+    const [disabled, setDisabled] = React.useState(false);
 
     function handleSubmit(evt) {
         evt.preventDefault();
@@ -15,7 +17,7 @@ function Register({ onRegister }) {
             email: values.email,
             password: values.password,
         });
-        resetForm();
+        setDisabled(true);
     }
 
     return (
@@ -29,6 +31,7 @@ function Register({ onRegister }) {
                 onChange={handleChange}
                 value={values.name || ""}
                 error={errors.name}
+                disabled={disabled}
             />
             <Input
                 name="email"
@@ -37,7 +40,7 @@ function Register({ onRegister }) {
                 onChange={handleChange}
                 value={values.email || ""}
                 error={errors.email}
-                placholder="aaa"
+                disabled={disabled}
             />
             <Input
                 name="password"
@@ -48,6 +51,7 @@ function Register({ onRegister }) {
                 onChange={handleChange}
                 value={values.password || ""}
                 error={errors.password}
+                disabled={disabled}
             />
             <SubmitBtn
                 title="Зарегистрироваться"

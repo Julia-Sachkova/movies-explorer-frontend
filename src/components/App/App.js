@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
+import { Route, Routes, useNavigate, useLocation, Navigate } from "react-router-dom";
 import "./App.css";
 
 import Main from "../Main/Main";
@@ -19,8 +19,8 @@ import { DURATION_MAX_TIME } from "../../utils/constants";
 function App() {
     const history = useNavigate();
     const location = useLocation();
-    const [shortMovies, setShortMovies] = useState(JSON.parse(localStorage.getItem("checkbox")));
-    const [shortSavedMovies, setShortSavedMovies] = useState(JSON.parse(localStorage.getItem("saved-checkbox")));
+    const [shortMovies, setShortMovies] = useState(JSON.parse(localStorage.getItem("checkbox")) || false);
+    const [shortSavedMovies, setShortSavedMovies] = useState(false);
     const [loading, setLoading] = useState(false);
     const [loggedIn, setLoggedIn] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
@@ -69,34 +69,43 @@ function App() {
 
     useEffect(() => {
         if (loggedIn) {
+            setLoading(true);
             Promise.all([moviesApi.getMovies(), mainApi.getSavedMovies()])
-            .then(([movies, savedMovies]) => {
+                .then(([movies, savedMovies]) => {
                     setLoading(true);
 
-                    localStorage.setItem("movies", JSON.stringify(movies));
-                    setMovies(JSON.parse(localStorage.getItem("movies")));
+                    if (localStorage.getItem("movies")) {
+                        setMovies(JSON.parse(localStorage.getItem("movies")));
+                    } else {
+                        localStorage.setItem("movies", JSON.stringify(movies));
+                    }
+
                     if (localStorage.getItem("filter-movies")) {
                         setFilteredMovies(JSON.parse(localStorage.getItem("filter-movies")));
                     }
 
-                    localStorage.setItem("saved-movies", JSON.stringify(savedMovies));
+                    if (localStorage.getItem("saved-movies")) {
+                        setSavedMovies(JSON.parse(localStorage.getItem("saved-movies")));
+                    } else {
+                        localStorage.setItem("saved-movies", JSON.stringify(savedMovies));
+                    }
+
                     const filterMoviesList = movies.reverse().filter((movie) => {
                         return savedMovies.find((m) => {
                             return m.movieId === movie.id;
                         });
                     });
-                    setSavedMovies(JSON.parse(localStorage.getItem("saved-movies")));
                     setFilteredSavedMovies(filterMoviesList);
-                }
-            )
-            .catch((err) => {
-                setPopupOpen(true);
-                setPopupErr(true);
-                setPopupText(`Произошла ошибка при загрузке фильмов: ${err}`);
-              })
-              .finally(() => {
-                setLoading(false);
-              })
+                })
+                .catch((err) => {
+                    setLoading(false);
+                    setPopupOpen(true);
+                    setPopupErr(true);
+                    setPopupText(`Произошла ошибка при загрузке фильмов: ${err}`);
+                })
+                .finally(() => {
+                    setLoading(false);
+                })
         }
     }, [loggedIn]);
 
@@ -191,7 +200,7 @@ function App() {
                     return m.movieId === movie.id;
                 });
             });
-    
+
             if (shortSavedMovies) {
                 const filterMoviesList = filteredArr.filter((movie) => {
                     return (
@@ -214,11 +223,40 @@ function App() {
     function handleCheck() {
         setShortMovies(!shortMovies);
         localStorage.setItem("checkbox", JSON.parse(!shortMovies));
+
+        if (localStorage.getItem("filter-movies")) {
+            const filterMoviesList = movies.filter((movie) => {
+                if (!shortMovies) {
+                    return movie.duration <= DURATION_MAX_TIME &&
+                        movie.nameRU.toLowerCase().includes(localStorage.getItem("value").toLowerCase())
+                } else {
+                    return movie.nameRU.toLowerCase().includes(localStorage.getItem("value").toLowerCase())
+                }
+            });
+            localStorage.setItem("filter-movies", JSON.stringify(filterMoviesList));
+            setFilteredMovies(filterMoviesList);
+        }
     }
 
     function handleCheckSaved() {
         setShortSavedMovies(!shortSavedMovies);
-        localStorage.setItem("saved-checkbox", JSON.parse(!shortSavedMovies));
+
+        const filteredArr = movies.filter((movie) => {
+            return savedMovies.find((m) => {
+                return m.movieId === movie.id;
+            });
+        });
+
+        const filterMoviesList = filteredArr.filter((movie) => {
+            if (!shortSavedMovies) {
+                return movie.duration <= DURATION_MAX_TIME &&
+                    movie.nameRU.toLowerCase().includes(localStorage.getItem("value").toLowerCase())
+            } else {
+                return movie.nameRU.toLowerCase().includes(localStorage.getItem("value").toLowerCase())
+            }
+        });
+        setIsSaved(true);
+        setFilteredSavedMovies(filterMoviesList);
     }
 
     function handleMovieSave(movie) {
@@ -228,7 +266,7 @@ function App() {
                 .then((newMovie) => {
                     setSavedMovies([newMovie, ...savedMovies]);
 
-                    const filterMovie = {...movies.filter(movie => movie.id === newMovie.movieId)}[0];
+                    const filterMovie = { ...movies.filter(movie => movie.id === newMovie.movieId) }[0];
                     setFilteredSavedMovies([filterMovie, ...filteredSavedMovies]);
 
                     setPopupOpen(true);
@@ -247,8 +285,7 @@ function App() {
 
     function handleDeleteMovie(movie) {
         const deletedMovie = savedMovies.find(
-            (m) => m.movieId === movie.id
-        );
+            (m) => m.movieId === movie.id);
 
         mainApi.deleteMovie(deletedMovie._id)
             .then(() => {
@@ -276,8 +313,12 @@ function App() {
         setPopupOpen(false);
     }
 
+    if (popupOpen) {
+        setTimeout(handlePopupClose, 4000);
+    }
+
     function toBack() {
-        return history(-1);
+        history(-2);
     }
 
     function handleExit() {
@@ -286,7 +327,6 @@ function App() {
         localStorage.removeItem("saved-movies");
         localStorage.removeItem("filter-movies");
         localStorage.removeItem("checkbox");
-        localStorage.removeItem("saved-checkbox");
         localStorage.removeItem("value");
         setFilteredMovies([]);
         setLoggedIn(false);
@@ -300,12 +340,19 @@ function App() {
                 <Routes>
                     <Route
                         path="/signup"
-                        element={<Register onRegister={handleRegistrSubmit} />}
+                        element={!loggedIn ?
+                            <Register onRegister={handleRegistrSubmit} />
+                            : <Navigate to="/" />
+                        }
                     />
 
                     <Route
                         path="/signin"
-                        element={<Login onLogin={handleLoginSubmit} />}
+                        element={!loggedIn ?
+                            <Login onLogin={handleLoginSubmit} />
+                            :
+                            <Navigate to="/" />
+                        }
                     />
 
                     <Route path="/" element={<Main isLoggedIn={loggedIn} />} />
