@@ -18,6 +18,7 @@ function Register({ onRegister }) {
             password: values.password,
         });
         setDisabled(true);
+        return !isValid;
     }
 
     return (

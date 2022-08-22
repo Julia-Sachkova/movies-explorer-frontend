@@ -16,6 +16,7 @@ function Login({ onLogin }) {
             password: values.password,
         });
         setDisabled(true);
+        return !isValid;
     }
 
     return (

@@ -9,6 +9,7 @@ function SearchForm({
     searchSavedMovie,
     onCheck,
     isCheckboxChecked,
+    hadleLoading,
 }) {
     const [inputValue, setInputValue] = React.useState(localStorage.getItem("value") || '');
     const [inputValueSaved, setInputValueSaved] = React.useState('');
@@ -25,6 +26,7 @@ function SearchForm({
     function handleSearch(evt) {
         evt.preventDefault();
         searchMovie(inputValue);
+        hadleLoading();
         localStorage.setItem("value", inputValue);
     }
 

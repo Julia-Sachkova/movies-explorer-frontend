@@ -1,4 +1,5 @@
 import React from "react";
+import { useWindowSize } from "../../../utils/useWindowSize";
 
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
@@ -21,25 +22,32 @@ function MoviesCardList({
     savedMovies,
     isSaved,
 }) {
-    const width = window.innerWidth;
+    const width = useWindowSize();
 
-    const [filmsAmount, setFilmsAmount] = React.useState(0);
+    const [filmsAmount, setFilmsAmount] = React.useState(filmsCounter);
     const [filmsAdd, setFilmsAdd] = React.useState(0);
 
     const moviesDisplay = moviesList.length - filmsAmount;
 
     React.useEffect(() => {
         if (width >= SCREEN_WIDTH_MID) {
-            setFilmsAmount(MOVIES_AMOUNT_MAX);
             setFilmsAdd(MOVIES_ADD_MAX);
         } else if (width < SCREEN_WIDTH_MID && width >= SCREEN_WIDTH_MIN) {
-            setFilmsAmount(MOVIES_AMOUNT_MID);
             setFilmsAdd(MOVIES_ADD_MIN);
         } else {
-            setFilmsAmount(MOVIES_AMOUNT_MIN);
             setFilmsAdd(MOVIES_ADD_MIN);
         }
     }, [width]);
+    
+    function filmsCounter() {
+        if (width >= SCREEN_WIDTH_MID) {
+            return MOVIES_AMOUNT_MAX;
+        } else if (width < SCREEN_WIDTH_MID && width >= SCREEN_WIDTH_MIN) {
+            return MOVIES_AMOUNT_MID;
+        } else {
+            return MOVIES_AMOUNT_MIN;
+        }
+    }
 
     function handleAddFilms() {
         setFilmsAmount(filmsAmount + filmsAdd);

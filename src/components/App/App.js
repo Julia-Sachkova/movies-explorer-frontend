@@ -67,47 +67,76 @@ function App() {
         }
     }, [loggedIn]);
 
+
     useEffect(() => {
         if (loggedIn) {
-            setLoading(true);
-            Promise.all([moviesApi.getMovies(), mainApi.getSavedMovies()])
-                .then(([movies, savedMovies]) => {
-                    setLoading(true);
+            const moviesList = localStorage.getItem("saved-movies");
+            const movies = localStorage.getItem("movies");
 
-                    if (localStorage.getItem("movies")) {
-                        setMovies(JSON.parse(localStorage.getItem("movies")));
-                    } else {
-                        localStorage.setItem("movies", JSON.stringify(movies));
-                    }
-
-                    if (localStorage.getItem("filter-movies")) {
-                        setFilteredMovies(JSON.parse(localStorage.getItem("filter-movies")));
-                    }
-
-                    if (localStorage.getItem("saved-movies")) {
-                        setSavedMovies(JSON.parse(localStorage.getItem("saved-movies")));
-                    } else {
-                        localStorage.setItem("saved-movies", JSON.stringify(savedMovies));
-                    }
-
-                    const filterMoviesList = movies.reverse().filter((movie) => {
-                        return savedMovies.find((m) => {
-                            return m.movieId === movie.id;
-                        });
+            if (moviesList) {
+                setSavedMovies(JSON.parse(moviesList));
+                
+                const filterMoviesList = JSON.parse(movies).reverse().filter((movie) => {
+                    return JSON.parse(moviesList).find((m) => {
+                        return m.movieId === movie.id;
                     });
-                    setFilteredSavedMovies(filterMoviesList);
-                })
-                .catch((err) => {
-                    setLoading(false);
-                    setPopupOpen(true);
-                    setPopupErr(true);
-                    setPopupText(`Произошла ошибка при загрузке фильмов: ${err}`);
-                })
-                .finally(() => {
-                    setLoading(false);
-                })
+                });
+                
+                setFilteredSavedMovies(filterMoviesList);
+            } else {
+                getSavedMovies();
+            }
         }
     }, [loggedIn]);
+
+    useEffect(() => {
+        if (loggedIn) {
+            const moviesList = localStorage.getItem("filter-movies");
+
+            if (moviesList) {
+                setFilteredMovies(JSON.parse(moviesList))
+            }
+        }
+    }, [loggedIn]);
+
+    useEffect(() => {
+        if (loggedIn) {
+            const moviesList = localStorage.getItem("movies");
+
+            if (moviesList) {
+                setMovies(JSON.parse(moviesList));
+            } else {
+                getMovies();
+            }
+        }
+    }, [loggedIn]);
+
+    function getMovies() {;
+        moviesApi.getMovies()
+            .then((movies) => {
+                localStorage.setItem("movies", JSON.stringify(movies));
+                setMovies(movies);
+            })
+            .catch((err) => {
+                setPopupOpen(true);
+                setPopupErr(true);
+                setPopupText(`Произошла ошибка при загрузке фильмов: ${err}`);
+            })
+    }
+
+    function getSavedMovies() {
+        mainApi.getSavedMovies()
+            .then((movies) => {
+                localStorage.setItem("saved-movies", JSON.stringify(movies));
+                setSavedMovies(movies);
+                setFilteredSavedMovies(movies);
+            })
+            .catch((err) => {
+                setPopupOpen(true);
+                setPopupErr(true);
+                setPopupText(`Произошла ошибка при загрузке фильмов: ${err}`);
+            })
+    }
 
     function handleLogin() {
         setLoggedIn(true);
@@ -269,6 +298,8 @@ function App() {
                     const filterMovie = { ...movies.filter(movie => movie.id === newMovie.movieId) }[0];
                     setFilteredSavedMovies([filterMovie, ...filteredSavedMovies]);
 
+                    localStorage.setItem("saved-movies", JSON.stringify([newMovie, ...savedMovies]));
+                    
                     setPopupOpen(true);
                     setPopupErr(false);
                     setPopupText('Фильм успешно сохранен!');
@@ -298,6 +329,8 @@ function App() {
                 setSavedMovies(newMovies);
                 setFilteredSavedMovies(newFilterMovies);
 
+                localStorage.setItem("saved-movies", JSON.stringify(newMovies));
+
                 setPopupOpen(true);
                 setPopupErr(false);
                 setPopupText('Фильм успешно удален!');
@@ -315,6 +348,13 @@ function App() {
 
     if (popupOpen) {
         setTimeout(handlePopupClose, 4000);
+    }
+
+    function hadleLoading() {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+          }, 500);
     }
 
     function toBack() {
@@ -370,6 +410,7 @@ function App() {
                                     savedMovies={savedMovies}
                                     onCheck={handleCheck}
                                     isCheckboxChecked={shortMovies}
+                                    hadleLoading={hadleLoading}
                                 />
                             </ProtectedRoute>
                         }
@@ -389,6 +430,7 @@ function App() {
                                     onCheck={handleCheckSaved}
                                     isCheckboxChecked={shortSavedMovies}
                                     isSaved={isSaved}
+                                    hadleLoading={hadleLoading}
                                 />
                             </ProtectedRoute>
                         }

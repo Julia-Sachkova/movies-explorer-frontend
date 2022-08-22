@@ -13,6 +13,7 @@ function SavedMovies({
     isCheckboxChecked,
     moviesList,
     isSaved,
+    hadleLoading,
 }) {
     return (
         <>
@@ -27,6 +28,7 @@ function SavedMovies({
                 searchSavedMovie={searchSavedMovie}
                 onCheck={onCheck}
                 isCheckboxChecked={isCheckboxChecked}
+                hadleLoading={hadleLoading}
             />
             {loading && <Preloader />}
             <MoviesCardList
