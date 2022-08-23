@@ -10,6 +10,11 @@
 .navigation__links-films {
     display: flex;
     margin: 28px auto;
+    color: #000000;
+}
+
+.navigation__links-films_main {
+    color: #fff;
 }
 
 .navigation__link {
@@ -19,7 +24,7 @@
     font-weight: 400;
     font-size: 13px;
     line-height: 18px;
-    color: #000000;
+    color: inherit;
     margin: 0;
     padding: 0;
     transition: opacity 0.5s ease;
@@ -56,6 +61,10 @@
     text-decoration: none;
     width: 100px;
     margin: 0;
+}
+
+.navigation__link-account_main {
+    color: #fff;
 }
 
 .navigation__link-account:hover {

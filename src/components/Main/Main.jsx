@@ -6,10 +6,10 @@ import AboutMe from "./AboutMe/AboutMe";
 import Portfolio from "./Portfolio/Portfolio";
 import Footer from "../Footer/Footer";
 
-function Main() {
+function Main({ isLoggedIn }) {
     return (
         <main>
-            <Promo />
+            <Promo isLoggedIn={isLoggedIn} />
             <NavTab />
             <AboutProject />
             <Techs />
@@ -17,7 +17,7 @@ function Main() {
             <Portfolio />
             <Footer />
         </main>
-    )
+    );
 }
 
 export default Main;

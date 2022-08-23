@@ -6,7 +6,7 @@
 }
 
 .about-me__title {
-    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 22px;
@@ -41,7 +41,7 @@
 }
 
 .about-me__name {
-    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 50px;
@@ -54,7 +54,7 @@
 }
 
 .about-me__job {
-    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
@@ -67,7 +67,7 @@
 }
 
 .about-me__life {
-    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -88,7 +88,7 @@
 }
 
 .about-me__social-link {
-    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -148,7 +148,7 @@
     }
 }
 
-@media screen and (max-width:520px) {
+@media screen and (max-width: 520px) {
     .about-me {
         padding-top: 70px;
         padding-bottom: 70px;

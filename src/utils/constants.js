@@ -1,0 +1,10 @@
+export const HOUR_TIME = 60;
+export const DURATION_MAX_TIME = 40;
+export const SCREEN_WIDTH_MID = 768;
+export const SCREEN_WIDTH_MIN = 520;
+export const MOVIES_AMOUNT_MAX = 12;
+export const MOVIES_AMOUNT_MID = 8;
+export const MOVIES_AMOUNT_MIN = 5;
+export const MOVIES_ADD_MAX = 3;
+export const MOVIES_ADD_MIN = 2;
+export const START_MOVIES_AMOUNT = 0;

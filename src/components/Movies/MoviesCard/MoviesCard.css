@@ -22,6 +22,7 @@
 }
 
 .card__name {
+    max-width: 270px;
     font-family: 'Inter', Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 500;
@@ -30,6 +31,10 @@
     color: #000000;
     margin: 14px 0 9px 14px;
     padding: 0;
+    text-overflow: ellipsis;
+    display: inline;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .card__time {
@@ -48,8 +53,8 @@
     background-color: transparent;
     background-repeat: no-repeat;
     background-position: center;
-    width: 30px;
-    height: 30px;
+    min-width: 30px;
+    min-height: 30px;
     border-radius: 15px;
     border: none;
     cursor: pointer;
@@ -84,10 +89,42 @@
     .card {
         grid-template-rows: 68px 190px;
     }
+
+    .card__name {
+        max-width: 260px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .card__name {
+        max-width: 240px;
+    }
+}
+
+@media screen and (max-width: 680px) {
+    .card__name {
+        max-width: 210px;
+    }
+}
+
+@media screen and (max-width: 620px) {
+    .card__name {
+        max-width: 180px;
+    }
+}
+
+@media screen and (max-width: 555px) {
+    .card__name {
+        max-width: 160px;
+    }
 }
 
 @media screen and (max-width: 520px) {
     .card {
         grid-template-rows: 68px 168px;
+    }
+
+    .card__name {
+        max-width: 210px;
     }
 }

@@ -10,13 +10,24 @@
     grid-template-columns: repeat(3, 1fr);
 }
 
+.cards__err {
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    text-align: center;
+    margin: 50px auto;
+    padding: 0;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #000000;
+}
+
 .cards__more {
     border: none;
     margin: 50px auto 80px;
     width: calc(100% - 140px);
-    background: #F9F9F9;
+    background: #f9f9f9;
     border-radius: 6px;
-    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
