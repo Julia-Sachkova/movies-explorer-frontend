@@ -1,4 +1,4 @@
-const BASE_URL = "https://movies-exp.nomoredomains.xyz";
+const BASE_URL = "https://movies-explorer-api-eta.vercel.app/";
 
 const checkResOk = (res) => {
     if (res.ok) {
